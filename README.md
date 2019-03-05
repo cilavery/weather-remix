@@ -20,3 +20,10 @@ More conscientious of UX:
  Add error handling
  Add loading animation
  Performance - way to load api response faster??
+
+
+ Steps
+ 1. Built out HTML structure
+ 2. Added JS - Built out functionality
+ 3. Add tests
+ 4. Add Styling and Responsiveness

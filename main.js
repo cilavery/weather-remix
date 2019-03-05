@@ -153,3 +153,10 @@ fetchForecastWeatherByZip = (zip) => {
       parseFiveDay(myJson.list)
     })
 }
+
+
+/* UNIT CONVERSION */
+//add checkbox or dropdown for UI 
+//two functions to recalulate the temp
+//needs to get each temp value by node, convert it to the new node
+
