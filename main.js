@@ -20,13 +20,14 @@ const docMainBody = {
 getWeather = () => {
   if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition(function (position) {
-      fetchCurrentWeather(position.coords.latitude, position.coords.longitude)
-      fetchForecastWeather(position.coords.latitude, position.coords.longitude)
+      fetchCurrentWeatherByGeo(position.coords.latitude, position.coords.longitude)
+      fetchForecastWeatherByGeo(position.coords.latitude, position.coords.longitude)
     })
   }
 }
 
-fetchCurrentWeather = (lat, lon) => {
+/* INITIAL DATA FETCH BASED ON LAT/LON */
+fetchCurrentWeatherByGeo = (lat, lon) => {
   fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${unit}&appid=${apiKey}`)
     .then(response => {
       return response.json()
@@ -42,7 +43,7 @@ fetchCurrentWeather = (lat, lon) => {
     })
 }
 
-fetchForecastWeather = (lat, lon) => {
+fetchForecastWeatherByGeo = (lat, lon) => {
   fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=${unit}&appid=${apiKey}`)
     .then(response => {
       return response.json()
@@ -52,6 +53,7 @@ fetchForecastWeather = (lat, lon) => {
     })
 }
 
+/* USED BY BOTH CURRENT TEMP & FIVE-DAY */
 setTemp = (doc, { cityJson, tempJson, weatherJson, sunlight, dayOfWeek }) => {
   let day
   sunlight ? (day = (today.getTime() > sunlight.sunrise) && (today.getTime() > sunlight.sunset) ? 'day' : 'night') : day = null
@@ -76,19 +78,19 @@ mapFiveDay = (arr) => {
   arr.forEach(day => {
     let node = document.createElement('div')
     let dayNode = document.createElement('h6')
-    dayNode.id = 'date-forecast'
+    dayNode.className = 'date-forecast'
     node.appendChild(dayNode)
     let descNode = document.createElement('div')
-    descNode.id = 'weather-desc-forecast'
+    descNode.className = 'weather-desc-forecast'
     node.appendChild(descNode)
     let iconElem = document.createElement('icon')
-    iconElem.id = 'icon-forecast'
+    iconElem.className = 'icon-forecast'
     node.appendChild(iconElem)
     let tempNode = document.createElement('div')
-    tempNode.id = 'temp-forecast'
+    tempNode.className = 'temp-forecast'
     node.appendChild(tempNode)
     let unitNode = document.createElement('div')
-    unitNode.id = 'unit-forecast'
+    unitNode.className = 'unit-forecast'
     node.appendChild(unitNode)
     forecastNode.appendChild(node)
     accessFiveDay(node, day)
@@ -101,7 +103,53 @@ accessFiveDay = (node, data) => {
     desc: node.childNodes[1],
     icon: node.childNodes[2],
     temp: node.childNodes[3],
-    unitId: node.childNodes[4]
+    unitId: node.childNodes[4],
+    city: ''
   }
   setTemp(docForecast, { tempJson: data.main.temp, weatherJson: data.weather[0], dayOfWeek: data.dt })
+}
+
+/* CHANGE LOCATION BY ZIPCODE*/
+const button = document.querySelector('button')
+button.addEventListener("click", getZipFunc)
+
+function getZipFunc() {
+  const zip = document.querySelector('input').value
+  clearForecastNodes()
+  fetchCurrentWeatherByZip(zip)
+  fetchForecastWeatherByZip(zip)
+}
+
+clearForecastNodes = () => {
+  const oldForecast = document.querySelector('aside')
+  while (oldForecast.firstChild) {
+    oldForecast.removeChild(oldForecast.firstChild)
+  }
+}
+
+
+fetchCurrentWeatherByZip = (zip) => {
+  fetch(`http://api.openweathermap.org/data/2.5/weather?zip=${zip},us&units=${unit}&appid=${apiKey}`)
+    .then(response => {
+      return response.json()
+    })
+    .then(myJson => {
+      const cityJson = myJson.name
+      const tempJson = myJson.main.temp
+      const weatherJson = myJson.weather[0]
+      const sunlight = {}
+      sunlight.sunrise = myJson.sys.sunrise
+      sunlight.sunset = myJson.sys.sunset
+      setTemp(docMainBody, { cityJson, tempJson, weatherJson, sunlight })
+    })
+}
+
+fetchForecastWeatherByZip = (zip) => {
+  fetch(`http://api.openweathermap.org/data/2.5/forecast?zip=${zip},us&units=${unit}&appid=${apiKey}`)
+    .then(response => {
+      return response.json()
+    })
+    .then(myJson => {
+      parseFiveDay(myJson.list)
+    })
 }
