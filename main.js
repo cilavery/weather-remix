@@ -1,10 +1,14 @@
+const daysOfWeek = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat']
+let today = new Date()
 
 getWeather = () => {
   if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition(function (position) {
       fetchCurrentWeatherByGeo(position.coords.latitude, position.coords.longitude)
       fetchForecastWeatherByGeo(position.coords.latitude, position.coords.longitude)
-    })
+    }, (error) => alert(error.message + ". Please enter a US Zipcode"))
+  } else {
+    alert('Please enter a US Zipcode')
   }
 }
 
@@ -50,7 +54,7 @@ setTemp = (doc, { cityJson, tempJson, weatherJson, sunlight, dayOfWeek }) => {
   doc.temp.innerText = Math.round(tempJson)
   doc.desc.innerText = weatherJson.description
   doc.icon.className = `wi wi-owm-${day ? day + '-' : ''}${weatherJson.id}`
-  doc.unitId.innerText = 'imperial' ? 'º F' : 'º C'
+  doc.unitId.innerText = unit === 'imperial' ? 'º F' : 'º C'
 }
 
 /* 5-DAY FORECAST */
@@ -119,6 +123,7 @@ fetchCurrentWeatherByZip = (zip) => {
       if (response.ok) {
         return response.json()
       }
+      alert('Please enter a valid US zipcode')
       throw new Error('Network response failed')
     })
     .then(myJson => {
@@ -150,6 +155,7 @@ fetchForecastWeatherByZip = (zip) => {
 function changeHandler(event) {
   const newUnit = event.target.value
   let allTemps = getAllTempValues()
+  unit = newUnit
   if (newUnit === 'metric') {
     const celsiusTemps = convertToMetric(allTemps)
     replaceTempText(celsiusTemps)
@@ -157,7 +163,7 @@ function changeHandler(event) {
     const fahrenheitTemps = convertToImperial(allTemps)
     replaceTempText(fahrenheitTemps)
   }
-  unit = newUnit
+  replaceUnitText()
 }
 
 getAllTempValues = () => {
@@ -173,6 +179,14 @@ replaceTempText = (newTemps) => {
   const tempNodesArr = Array.from(tempNodes)
   for (let i = 0; i < newTemps.length; i++) {
     tempNodesArr[i].innerText = newTemps[i]
+  }
+}
+
+replaceUnitText = () => {
+  const unitNodes = document.querySelectorAll('.unit-forecast')
+  const unitNodesArr = Array.from(unitNodes)
+  for (let i = 0; i < unitNodes.length; i++) {
+    unitNodesArr[i].innerText = unit === 'imperial' ? 'º F' : 'º C'
   }
 }
 

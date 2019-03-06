@@ -3,10 +3,8 @@ window.onload = function () {
 }
 
 const apiKey = '3317ddd89ed0eaa04733ad6ab3569291'
-let today = new Date()
-let unit = document.getElementById('temp-unit').value
 
-const daysOfWeek = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat']
+let unit = document.getElementById('temp-unit').value
 
 const docMainBody = {
   city: document.getElementById('location'),
