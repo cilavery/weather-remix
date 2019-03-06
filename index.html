@@ -4,6 +4,9 @@
 <head>
   <meta charset="utf-8">
   <title>Weather App REMIX</title>
+  <link rel="stylesheet" href="./styles/css/custom.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css"
     href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css">
   <link rel="stylesheet" type="text/css" href="./styles/css/weather-icons.min.css">
@@ -11,34 +14,50 @@
 </head>
 
 <body>
-  <header>
+  <header id="title">
     Weather App REMIX
   </header>
-  <main>
-    <h1 id="location">Current Location</h1>
-    <h3 id="date">Current Date</h3>
-    <div id="weather-desc">Weather Description</div>
-    <i id="icon"></i>
-    <div id="temp" class="temp-forecast">Temperature</div>
-    <div id="unit" class="unit-forecast">F/C</div>
-  </main>
-  <aside id="five-day">
-    5 day forecast:
-  </aside>
-  <footer>
-    <label for="zip">Change Location</label>
-    <input type="text" id="location-change" name="zip" placeholder="zipcode" size="10" required minlength="5"
-      maxlength="5" size="5">
-    <button>Submit</button>
+  <div class="container">
+    <div class="row">
+      <main class="col-8 text-center pt-5">
+        <h1 id="location"></h1>
+        <h4 id="date"></h4>
+        <div id="weather-desc" class="font-weight-light font-italic py-3"></div>
+        <div class="d-flex flex-row">
+          <i id="icon"></i>
+          <div class="d-flex flex-row align-items-center pl-5">
+            <div id="temp" class="temp-forecast"></div>
+            <div id="unit" class="unit-forecast"></div>
+          </div>
+        </div>
+      </main>
 
-    <label for="temp-unit">Change Unit:</label>
-    <select id="temp-unit">
-      <option value="imperial">Fahrenheit</option>
-      <option value="metric" selected>Celsius</option>
-    </select>
+      <aside id="five-day" class="col-4 d-flex flex-column text-light bg bg-warning rounded">
+        <h4 class="text-center pt-5">5-DAY FORECAST</h4>
+      </aside>
+    </div>
+  </div>
+  <footer class="container">
+    <div class="row text-center text-light p-3 mt-5 bg bg-secondary align-items-center ">
+      <div class="col">
+        <label for="zip" class="pr-2">Change Location:</label>
+        <input type="text" id="location-change" name="zip" placeholder="zipcode" size="10" required minlength="5"
+          maxlength="5" size="5" class="text-center">
+        <button type="button" class="btn btn-sm btn-outline-light ml-2">Submit</button>
+      </div>
+
+      <div class="col">
+        <label for="temp-unit">Change Unit:</label>
+        <select id="temp-unit">
+          <option value="imperial">Fahrenheit</option>
+          <option value="metric" selected>Celsius</option>
+        </select>
+      </div>
+    </div>
   </footer>
   <script src="main.js"></script>
   <script src="index.js"></script>
+
 </body>
 
 </html>

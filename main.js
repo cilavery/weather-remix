@@ -53,7 +53,7 @@ setTemp = (doc, { cityJson, tempJson, weatherJson, sunlight, dayOfWeek }) => {
   doc.city.innerText = typeof cityJson !== 'undefined' ? cityJson : null
   doc.temp.innerText = Math.round(tempJson)
   doc.desc.innerText = weatherJson.description
-  doc.icon.className = `wi wi-owm-${day ? day + '-' : ''}${weatherJson.id}`
+  doc.icon.className = `wi wi-owm-${day ? day + '-' : ''}${weatherJson.id} pr-4`
   doc.unitId.innerText = unit === 'imperial' ? 'º F' : 'º C'
 }
 
@@ -69,20 +69,20 @@ mapFiveDay = (arr) => {
   const forecastNode = document.getElementById('five-day')
   arr.forEach(day => {
     let node = document.createElement('div')
-    let dayNode = document.createElement('h6')
-    dayNode.className = 'date-forecast'
+    node.classList.add('d-flex', 'flex-row', 'justify-content-between', 'align-items-center')
+    let dayNode = document.createElement('div')
+    dayNode.classList.add('date-forecast', 'p-3', 'font-weight-bold')
     node.appendChild(dayNode)
     let descNode = document.createElement('div')
-    descNode.className = 'weather-desc-forecast'
+    descNode.classList.add('weather-desc-forecast')
     node.appendChild(descNode)
     let iconElem = document.createElement('icon')
-    iconElem.className = 'icon-forecast'
     node.appendChild(iconElem)
     let tempNode = document.createElement('div')
-    tempNode.className = 'temp-forecast'
+    tempNode.classList.add('temp-forecast')
     node.appendChild(tempNode)
     let unitNode = document.createElement('div')
-    unitNode.className = 'unit-forecast'
+    unitNode.classList.add('unit-forecast', 'p-3')
     node.appendChild(unitNode)
     forecastNode.appendChild(node)
     accessFiveDay(node, day)

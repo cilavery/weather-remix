@@ -1,0 +1,25 @@
+#five-day {
+  font-size: 1.2em;
+}
+
+.wi {
+  font-size: 1.5em;
+}
+
+#icon {
+  font-size: 14em;
+  padding-top: .2em;
+  color: lightblue;
+}
+
+#temp {
+  font-size: 6em;
+  color: darkslategray;
+}
+
+#unit {
+  font-size: 2.2em;
+  padding-left: .4em;
+  color: darkslategray;
+}
+
