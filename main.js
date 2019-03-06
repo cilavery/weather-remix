@@ -59,7 +59,7 @@ setTemp = (doc, { cityJson, tempJson, weatherJson, sunlight, dayOfWeek }) => {
   sunlight ? (day = (today.getTime() > sunlight.sunrise) && (today.getTime() > sunlight.sunset) ? 'day' : 'night') : day = null
   doc.date.innerText = sunlight ? today.toDateString() : daysOfWeek[new Date(dayOfWeek * 1000).getDay()]
   doc.city.innerText = typeof cityJson !== 'undefined' ? cityJson : null
-  doc.temp.innerText = (tempJson).toPrecision(2)
+  doc.temp.innerText = Math.round(tempJson)
   doc.desc.innerText = weatherJson.description
   doc.icon.className = `wi wi-owm-${day ? day + '-' : ''}${weatherJson.id}`
   doc.unitId.innerText = 'imperial' ? 'º F' : 'º C'
@@ -190,14 +190,14 @@ replaceTempText = (newTemps) => {
 
 convertToMetric = (arrTemps) => {
   const convertedTemps = arrTemps.map(temp => {
-    return ((5 / 9) * (Number(temp) - 32)).toPrecision(2)
+    return Math.round((5 / 9) * (temp - 32))
   })
   return convertedTemps
 }
 
 convertToImperial = (arrTemps) => {
   const convertedTemps = arrTemps.map(temp => {
-    return ((Number(temp) * 9 / 5) + 32).toPrecision(2)
+    return Math.round((temp * 9 / 5) + 32)
   })
   return convertedTemps
 }
