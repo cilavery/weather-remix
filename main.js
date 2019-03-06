@@ -4,7 +4,7 @@ window.onload = function () {
 
 const apiKey = '3317ddd89ed0eaa04733ad6ab3569291'
 let today = new Date()
-let unit = 'imperial'
+let unit = document.getElementById('temp-unit').value
 
 const daysOfWeek = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat']
 
@@ -59,7 +59,7 @@ setTemp = (doc, { cityJson, tempJson, weatherJson, sunlight, dayOfWeek }) => {
   sunlight ? (day = (today.getTime() > sunlight.sunrise) && (today.getTime() > sunlight.sunset) ? 'day' : 'night') : day = null
   doc.date.innerText = sunlight ? today.toDateString() : daysOfWeek[new Date(dayOfWeek * 1000).getDay()]
   doc.city.innerText = typeof cityJson !== 'undefined' ? cityJson : null
-  doc.temp.innerText = Math.round(tempJson)
+  doc.temp.innerText = (tempJson).toPrecision(2)
   doc.desc.innerText = weatherJson.description
   doc.icon.className = `wi wi-owm-${day ? day + '-' : ''}${weatherJson.id}`
   doc.unitId.innerText = 'imperial' ? 'º F' : 'º C'
@@ -156,7 +156,50 @@ fetchForecastWeatherByZip = (zip) => {
 
 
 /* UNIT CONVERSION */
-//add checkbox or dropdown for UI 
-//two functions to recalulate the temp
-//needs to get each temp value by node, convert it to the new node
+const unitChange = document.querySelector('select')
+unitChange.onchange = changeHandler
+
+function changeHandler(event) {
+  const newUnit = event.target.value
+  let allTemps = getAllTempValues()
+  if (newUnit === 'metric') {
+    const celsiusTemps = convertToMetric(allTemps)
+    replaceTempText(celsiusTemps)
+  } else if (newUnit === 'imperial') {
+    const fahrenheitTemps = convertToImperial(allTemps)
+    replaceTempText(fahrenheitTemps)
+  }
+  unit = newUnit
+}
+
+getAllTempValues = () => {
+  const tempNodes = document.querySelectorAll('.temp-forecast')
+  const allTemps = Array.prototype.map.call(tempNodes, function (n) {
+    return n.innerText
+  })
+  return allTemps
+}
+
+replaceTempText = (newTemps) => {
+  const tempNodes = document.querySelectorAll('.temp-forecast')
+  const tempNodesArr = Array.from(tempNodes)
+  for (let i = 0; i < newTemps.length; i++) {
+    tempNodesArr[i].innerText = newTemps[i]
+  }
+}
+
+convertToMetric = (arrTemps) => {
+  const convertedTemps = arrTemps.map(temp => {
+    return ((5 / 9) * (Number(temp) - 32)).toPrecision(2)
+  })
+  return convertedTemps
+}
+
+convertToImperial = (arrTemps) => {
+  const convertedTemps = arrTemps.map(temp => {
+    return ((Number(temp) * 9 / 5) + 32).toPrecision(2)
+  })
+  return convertedTemps
+}
+
 

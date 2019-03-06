@@ -19,7 +19,7 @@
     <h3 id="date">Current Date</h3>
     <div id="weather-desc">Weather Description</div>
     <i id="icon"></i>
-    <div id="temp">Temperature</div>
+    <div id="temp" class="temp-forecast">Temperature</div>
     <div id="unit">F/C</div>
   </main>
   <aside id="five-day">
@@ -30,7 +30,12 @@
     <input type="text" id="location-change" name="zip" placeholder="zipcode" size="10" required minlength="5"
       maxlength="5" size="5">
     <button>Submit</button>
-    <div>Change unit</div>
+
+    <label for="temp-unit">Change Unit:</label>
+    <select id="temp-unit">
+      <option value="imperial">Fahrenheit</option>
+      <option value="metric" selected>Celsius</option>
+    </select>
   </footer>
   <script src="main.js"></script>
 </body>
