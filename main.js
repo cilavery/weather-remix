@@ -1,21 +1,3 @@
-window.onload = function () {
-  getWeather()
-}
-
-const apiKey = '3317ddd89ed0eaa04733ad6ab3569291'
-let today = new Date()
-let unit = document.getElementById('temp-unit').value
-
-const daysOfWeek = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat']
-
-const docMainBody = {
-  city: document.getElementById('location'),
-  date: document.getElementById('date'),
-  temp: document.getElementById('temp'),
-  desc: document.getElementById('weather-desc'),
-  icon: document.getElementById('icon'),
-  unitId: document.getElementById('unit')
-}
 
 getWeather = () => {
   if ("geolocation" in navigator) {
@@ -30,7 +12,10 @@ getWeather = () => {
 fetchCurrentWeatherByGeo = (lat, lon) => {
   fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${unit}&appid=${apiKey}`)
     .then(response => {
-      return response.json()
+      if (response.ok) {
+        return response.json()
+      }
+      throw new Error('Network response failed')
     })
     .then(myJson => {
       const cityJson = myJson.name
@@ -41,16 +26,19 @@ fetchCurrentWeatherByGeo = (lat, lon) => {
       sunlight.sunset = myJson.sys.sunset
       setTemp(docMainBody, { cityJson, tempJson, weatherJson, sunlight })
     })
+    .catch(error => console.error('Error: ', error))
 }
 
 fetchForecastWeatherByGeo = (lat, lon) => {
   fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=${unit}&appid=${apiKey}`)
     .then(response => {
-      return response.json()
+      if (response.ok) {
+        return response.json()
+      }
+      throw new Error('Network response failed')
     })
-    .then(myJson => {
-      parseFiveDay(myJson.list)
-    })
+    .then(myJson => parseFiveDay(myJson.list))
+    .catch(error => console.error('Error: ', error))
 }
 
 /* USED BY BOTH CURRENT TEMP & FIVE-DAY */
@@ -110,9 +98,6 @@ accessFiveDay = (node, data) => {
 }
 
 /* CHANGE LOCATION BY ZIPCODE*/
-const button = document.querySelector('button')
-button.addEventListener("click", getZipFunc)
-
 function getZipFunc() {
   const zip = document.querySelector('input').value
   clearForecastNodes()
@@ -131,7 +116,10 @@ clearForecastNodes = () => {
 fetchCurrentWeatherByZip = (zip) => {
   fetch(`http://api.openweathermap.org/data/2.5/weather?zip=${zip},us&units=${unit}&appid=${apiKey}`)
     .then(response => {
-      return response.json()
+      if (response.ok) {
+        return response.json()
+      }
+      throw new Error('Network response failed')
     })
     .then(myJson => {
       const cityJson = myJson.name
@@ -142,23 +130,23 @@ fetchCurrentWeatherByZip = (zip) => {
       sunlight.sunset = myJson.sys.sunset
       setTemp(docMainBody, { cityJson, tempJson, weatherJson, sunlight })
     })
+    .catch(error => console.error('Error: ', error))
 }
 
 fetchForecastWeatherByZip = (zip) => {
   fetch(`http://api.openweathermap.org/data/2.5/forecast?zip=${zip},us&units=${unit}&appid=${apiKey}`)
     .then(response => {
-      return response.json()
+      if (response.ok) {
+        return response.json()
+      }
+      throw new Error('Network response failed')
     })
-    .then(myJson => {
-      parseFiveDay(myJson.list)
-    })
+    .then(myJson => parseFiveDay(myJson.list))
+    .catch(error => console.error('Error: ', error))
 }
 
 
 /* UNIT CONVERSION */
-const unitChange = document.querySelector('select')
-unitChange.onchange = changeHandler
-
 function changeHandler(event) {
   const newUnit = event.target.value
   let allTemps = getAllTempValues()
