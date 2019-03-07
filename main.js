@@ -15,7 +15,7 @@ getWeather = () => {
 
 /* INITIAL DATA FETCH BASED ON LAT/LON */
 fetchCurrentWeatherByGeo = (lat, lon) => {
-  fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${unit}&appid=${apiKey}`)
+  fetch(`https://crossorigin.me/https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${unit}&appid=${apiKey}`)
     .then(response => {
       if (response.ok) {
         clearNodes('loading')
@@ -36,7 +36,7 @@ fetchCurrentWeatherByGeo = (lat, lon) => {
 }
 
 fetchForecastWeatherByGeo = (lat, lon) => {
-  fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=${unit}&appid=${apiKey}`)
+  fetch(`https://crossorigin.me/https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=${unit}&appid=${apiKey}`)
     .then(response => {
       if (response.ok) {
         return response.json()
@@ -120,7 +120,7 @@ clearNodes = (id) => {
 
 
 fetchCurrentWeatherByZip = (zip) => {
-  fetch(`https://api.openweathermap.org/data/2.5/weather?zip=${zip},us&units=${unit}&appid=${apiKey}`)
+  fetch(`https://crossorigin.me/https://api.openweathermap.org/data/2.5/weather?zip=${zip},us&units=${unit}&appid=${apiKey}`)
     .then(response => {
       if (response.ok) {
         return response.json()
@@ -141,7 +141,7 @@ fetchCurrentWeatherByZip = (zip) => {
 }
 
 fetchForecastWeatherByZip = (zip) => {
-  fetch(`https://api.openweathermap.org/data/2.5/forecast?zip=${zip},us&units=${unit}&appid=${apiKey}`)
+  fetch(`https://crossorigin.me/https://api.openweathermap.org/data/2.5/forecast?zip=${zip},us&units=${unit}&appid=${apiKey}`)
     .then(response => {
       if (response.ok) {
         return response.json()
