@@ -1,4 +1,23 @@
-Weather App REMIX
+##Weather App REMIX
+
+
+### RUN THE APP
+
+
+### TEST THE APP
+ 
+
+
+### THOUGHT PROCESS 
+
+
+### TRADEOFFS?
+
+
+### WHAT I'D LIKE TO IMPLEMENT WITH MORE TIME
+
+
+
 
 Re-write of app in plain javascript because why not
 

@@ -19,3 +19,4 @@ describe('convertToImperial function', () => {
     expect(convertToImperial(arrTemps)).toEqual([32, 41, 52, 57, 73])
   })
 })
+

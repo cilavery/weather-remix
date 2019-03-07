@@ -56,7 +56,7 @@ setTemp = (doc, { cityJson, tempJson, weatherJson, sunlight, dayOfWeek }) => {
   doc.temp.innerText = Math.round(tempJson)
   doc.desc.innerText = weatherJson.description
   doc.icon.className = `wi wi-owm-${day ? day + '-' : ''}${weatherJson.id}`
-  doc.unitId.innerText = unit === 'imperial' ? 'º F' : 'º C'
+  doc.unitId.innerText = unit === 'imperial' ? 'ºF' : 'ºC'
 }
 
 /* 5-DAY FORECAST */
