@@ -205,5 +205,3 @@ convertToImperial = (arrTemps) => {
   })
   return convertedTemps
 }
-
-
