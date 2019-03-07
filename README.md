@@ -28,5 +28,5 @@ As much as I wanted this project to be all DIY, I decided to incorporate Bootstr
 
 ### WHAT I'D LIKE TO IMPLEMENT WITH MORE TIME
 ---
-With more time I would love to add better tests and add CSS transitions. 
+With more time I would love to add better tests where I mock the fetch request. I would also like to add more CSS transitions to add movement to the site. 
 
