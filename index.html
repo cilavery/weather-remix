@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <title>Weather App REMIX</title>
+  <link href="https://fonts.googleapis.com/css?family=Marcellus|Questrial|Oswald" rel="stylesheet">
   <link rel="stylesheet" href="./styles/css/custom.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -14,50 +15,53 @@
 </head>
 
 <body>
-  <header id="title">
-    Weather App REMIX
-  </header>
-  <div class="container">
-    <div class="row">
-      <main class="col-8 text-center pt-5">
-        <h1 id="location"></h1>
-        <h4 id="date"></h4>
-        <div id="weather-desc" class="font-weight-light font-italic py-3"></div>
-        <div class="d-flex flex-row">
-          <i id="icon"></i>
-          <div class="d-flex flex-row align-items-center pl-5">
-            <div id="temp" class="temp-forecast"></div>
-            <div id="unit" class="unit-forecast"></div>
+  <div>
+    <div class="container">
+      <div class="row">
+        <main id="main" class="col-8 text-center py-5">
+          <div id="loading">
+            <div class="loader"></div>
+            <div>Fetching the weather...</div>
           </div>
+          <h1 id="location"></h1>
+          <h4 id="date"></h4>
+          <div id="weather-desc" class="font-weight-light font-italic py-3"></div>
+          <div class="d-flex flex-row justify-content-around">
+            <i id="icon"></i>
+            <div class="d-flex flex-row align-items-center">
+              <div id="temp" class="temp-forecast"></div>
+              <div id="unit" class="unit-forecast"></div>
+            </div>
+          </div>
+        </main>
+
+        <aside id="five-day" class="col-4 d-flex flex-column text-light bg bg-warning rounded mt-5">
+          <h4 id="forecast-title" class="text-center mt-5">5-DAY FORECAST</h4>
+          <div id="forecast-list" class="pt-3"></div>
+        </aside>
+      </div>
+    </div>
+    <footer class="container mt-5">
+      <div class="row text-center text-light p-3 mt-5 bg bg-secondary align-items-center ">
+        <div class="col">
+          <label for="zip" class="pr-2">Change Location:</label>
+          <input type="text" id="location-change" name="zip" placeholder="zipcode" size="10" required minlength="5"
+            maxlength="5" size="5" class="text-center">
+          <button type="button" class="btn btn-sm btn-outline-light ml-2">Submit</button>
         </div>
-      </main>
 
-      <aside id="five-day" class="col-4 d-flex flex-column text-light bg bg-warning rounded">
-        <h4 class="text-center pt-5">5-DAY FORECAST</h4>
-      </aside>
-    </div>
+        <div class="col">
+          <label for="temp-unit">Change Unit:</label>
+          <select id="temp-unit">
+            <option value="imperial">Fahrenheit</option>
+            <option value="metric" selected>Celsius</option>
+          </select>
+        </div>
+      </div>
+    </footer>
   </div>
-  <footer class="container">
-    <div class="row text-center text-light p-3 mt-5 bg bg-secondary align-items-center ">
-      <div class="col">
-        <label for="zip" class="pr-2">Change Location:</label>
-        <input type="text" id="location-change" name="zip" placeholder="zipcode" size="10" required minlength="5"
-          maxlength="5" size="5" class="text-center">
-        <button type="button" class="btn btn-sm btn-outline-light ml-2">Submit</button>
-      </div>
-
-      <div class="col">
-        <label for="temp-unit">Change Unit:</label>
-        <select id="temp-unit">
-          <option value="imperial">Fahrenheit</option>
-          <option value="metric" selected>Celsius</option>
-        </select>
-      </div>
-    </div>
-  </footer>
   <script src="main.js"></script>
   <script src="index.js"></script>
-
 </body>
 
 </html>

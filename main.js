@@ -1,6 +1,7 @@
 const daysOfWeek = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat']
 let today = new Date()
 
+
 getWeather = () => {
   if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition(function (position) {
@@ -17,6 +18,7 @@ fetchCurrentWeatherByGeo = (lat, lon) => {
   fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${unit}&appid=${apiKey}`)
     .then(response => {
       if (response.ok) {
+        clearNodes('loading')
         return response.json()
       }
       throw new Error('Network response failed')
@@ -53,7 +55,7 @@ setTemp = (doc, { cityJson, tempJson, weatherJson, sunlight, dayOfWeek }) => {
   doc.city.innerText = typeof cityJson !== 'undefined' ? cityJson : null
   doc.temp.innerText = Math.round(tempJson)
   doc.desc.innerText = weatherJson.description
-  doc.icon.className = `wi wi-owm-${day ? day + '-' : ''}${weatherJson.id} pr-4`
+  doc.icon.className = `wi wi-owm-${day ? day + '-' : ''}${weatherJson.id}`
   doc.unitId.innerText = unit === 'imperial' ? 'º F' : 'º C'
 }
 
@@ -66,23 +68,23 @@ parseFiveDay = (arr) => {
 }
 
 mapFiveDay = (arr) => {
-  const forecastNode = document.getElementById('five-day')
+  const forecastNode = document.getElementById('forecast-list')
   arr.forEach(day => {
     let node = document.createElement('div')
     node.classList.add('d-flex', 'flex-row', 'justify-content-between', 'align-items-center')
     let dayNode = document.createElement('div')
-    dayNode.classList.add('date-forecast', 'p-3', 'font-weight-bold')
+    dayNode.classList.add('date-forecast', 'p-3', 'font-weight-bold', 'forecast-font')
     node.appendChild(dayNode)
     let descNode = document.createElement('div')
-    descNode.classList.add('weather-desc-forecast')
+    descNode.classList.add('weather-desc-forecast', 'forecast-font')
     node.appendChild(descNode)
     let iconElem = document.createElement('icon')
     node.appendChild(iconElem)
     let tempNode = document.createElement('div')
-    tempNode.classList.add('temp-forecast')
+    tempNode.classList.add('temp-forecast', 'forecast-font')
     node.appendChild(tempNode)
     let unitNode = document.createElement('div')
-    unitNode.classList.add('unit-forecast', 'p-3')
+    unitNode.classList.add('unit-forecast', 'p-3', 'forecast-font')
     node.appendChild(unitNode)
     forecastNode.appendChild(node)
     accessFiveDay(node, day)
@@ -104,13 +106,13 @@ accessFiveDay = (node, data) => {
 /* CHANGE LOCATION BY ZIPCODE*/
 function getZipFunc() {
   const zip = document.querySelector('input').value
-  clearForecastNodes()
+  clearNodes('forecast-list')
   fetchCurrentWeatherByZip(zip)
   fetchForecastWeatherByZip(zip)
 }
 
-clearForecastNodes = () => {
-  const oldForecast = document.querySelector('aside')
+clearNodes = (id) => {
+  const oldForecast = document.getElementById(id)
   while (oldForecast.firstChild) {
     oldForecast.removeChild(oldForecast.firstChild)
   }
