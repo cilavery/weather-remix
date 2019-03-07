@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Weather App REMIX</title>
   <link href="https://fonts.googleapis.com/css?family=Marcellus|Questrial|Oswald" rel="stylesheet">
   <link rel="stylesheet" href="./styles/css/custom.css">
@@ -45,8 +46,8 @@
       <div class="row text-center text-light p-3 mt-5 bg bg-secondary align-items-center ">
         <div class="col">
           <label for="zip" class="pr-2">Change Location:</label>
-          <input type="text" id="location-change" name="zip" placeholder="zipcode" size="10" required minlength="5"
-            maxlength="5" size="5" class="text-center">
+          <input type="text" id="location-change" name="zip" placeholder="zipcode" pattern="[0-9]{5}" minlength="5"
+            maxlength="5" class="text-center">
           <button type="button" class="btn btn-sm btn-outline-light ml-2">Submit</button>
         </div>
 
