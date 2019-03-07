@@ -1,4 +1,4 @@
-##Weather App REMIX
+## Weather App REMIX
 
 Weather App Remix is deployed on Github Pages [here](https://cilavery.github.io/weather-remix/)
 
