@@ -19,10 +19,10 @@ As such I built this app using vanilla Javascript. I wanted to gain experience i
 
 Although this weather app generally looks similar to my first version, other things that changed other than writing it in vanilla javascript was adding a loading animation while the data is being fetched and handling errors if the user inputs a wrong zipcode. From this perspective the app has a much better UX than the previous version because the user is given more clues to the state of the application. I also added input validation to the zipode to improve security.
 
-When writing the code I was much more conscious of writing small functions with better variable names and keeping in mind reuseability of code. I also made use of object destructing and using ternary operators heavily - something I enjoyed learning and using during Buildit trainging.
+When writing the code I was much more conscious of writing small functions with better variable names and keeping in mind reuseability of code. I also made use of object destructing and using ternary operators heavily - something I enjoyed learning and using during Buildit training.
 
 
-### TRADEOFFS?
+### TRADEOFFS
 ---
 As much as I wanted this project to be all DIY, I decided to incorporate Bootstrap for layout and styling in addition to custom CSS. I wanted to focus more on the handling of the DOM and so adding Bootstrap made it somewhat easier to abstract out the thinking for layout. 
 
